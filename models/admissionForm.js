@@ -1,63 +1,76 @@
 const {DataTypes} = require('sequelize')
 const sequelize = require('../config/connection')
 
+
+
+
+
 const AdmissionForm = sequelize.define('AdmissionForm',{
+
     Registration_No: {
-        type: DataTypes.STRING,
-        allowNull: false, // This field cannot be null
+        type: DataTypes.INTEGER,
+        allowNull: true, 
+        unique: true
       },
-    Admission_Date:{
-        // type: DataTypes.DATE,
-        type:DataTypes.STRING,
-        allowNull:false,
-        // defaultValue:DataTypes.NOW
-    },
+      Admission_Date: {
+        type: DataTypes.DATEONLY, 
+        allowNull: true, // or false, depending on your requirements
+        defaultValue: DataTypes.NOW, // Set a default value if needed
+      },
     Class_Roll_No:{ 
-        // type: DataTypes.INTEGER,
         type: DataTypes.STRING,
-        allowNull:false
-    },
+        allowNull:true,
+        },
     Student_Name:{
         type: DataTypes.STRING,
-        allowNull:false
+        allowNull:true
     },
     Date_of_Birth:{
         type: DataTypes.STRING,
-        allowNull:false
+        allowNull:true
     },
     Left_School:{
         type: DataTypes.STRING,
-        allowNull:false,
-        // defaultValue:DataTypes.NOW  
+        allowNull:true,
     },
     Remarks:{
         type: DataTypes.STRING,
-        allowNull:false
+        allowNull:true
     },
     Class:{
         type: DataTypes.STRING,
-        allowNull:false
-    },
-    Father_Name:{
-        type: DataTypes.STRING,
-        allowNull:false
+        allowNull:true
     },
     Age:{
         type: DataTypes.STRING,
-        allowNull:false
+        allowNull:true
     },
     Gender:{
         type: DataTypes.STRING,
-        allowNull:false
+        allowNull:true
     },
     Reason_to_Leave:{
         type: DataTypes.STRING,
-        allowNull:false
+        allowNull:true
     },
-    // filename: {
-    //     type: DataTypes.STRING,
-    //     allowNull: true,
-    //   },
+    filename: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+    status:{
+        type: DataTypes.STRING,
+        allowNull: false,
+    }
+
 })
+
+AdmissionForm.beforeCreate(async (admissionForm, options) => {
+    if (!admissionForm.Registration_No) {
+      const highestRegistration = await AdmissionForm.max('Registration_No', { where: {} });
+      admissionForm.Registration_No = (parseInt(highestRegistration, 10) || 0) + 1;
+    }
+  });
+  
+
 
 module.exports = AdmissionForm

@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/connection'); // Import your Sequelize configuration
 const jwt = require('jsonwebtoken')
-const Managment = sequelize.define('managments', {
+const Managment = sequelize.define('registrations', {
   name: {
     type: DataTypes.STRING,
     allowNull: false,

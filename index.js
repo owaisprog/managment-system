@@ -3,7 +3,8 @@ const app  = express()
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const sequelize = require('./config/connection')
-const PORT  = process.env.PORT || 4000
+const cors = require('cors')
+const PORT  = process.env.PORT || 6000
 require('dotenv').config();
 
 
@@ -27,14 +28,15 @@ app.use(bodyParser.json());
 app.use(cookieParser())
 
 
+// parsing cors 
+
+app.use(cors())
+
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 app.use('/api',userrouter)
 
 
-// app.listen(PORT,()=>{
-//     console.log(`server is running on PORT : ${PORT}`)
-// })
 
 
 sequelize.sync().then(() => {
