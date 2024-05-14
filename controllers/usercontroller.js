@@ -4,10 +4,10 @@ const multer = require('multer')
 
 // getting user id through middleware 
 
-const verifyToken = require('../middlewares/middleware')
+const verifyToken = require('../middlewares/middleware')   
 
 
-
+console.log("kjcnkdsjncsdck")
 
 
 // importing user models here 
